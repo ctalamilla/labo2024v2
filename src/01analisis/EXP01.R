@@ -3,6 +3,8 @@ library(tidyverse)
 
 ## Con Meses de Pandemia ##
 path = '~/buckets/b1/flow-05/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt'
+system('cp ~/buckets/b1/flow-05/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt ~/labo2024v2/src/01analisis/data/ganancias_log.txt')
+
 ganancia <- read_delim(path,
                          delim = "\t", escape_double = FALSE,
                          trim_ws = TRUE)
@@ -16,9 +18,12 @@ ganancia %>% arrange(desc(ganancia))
 ## Sin Meses de Pandemia (marzo y abril 2020)
 
 path = '~/buckets/b1/flow-03/wf_septiembre-005/011-KA_evaluate_kaggle/ganancias_log.txt'
+system('cp ~/buckets/b1/flow-03/wf_septiembre-005/011-KA_evaluate_kaggle/ganancias_log.txt ~/labo2024v2/src/01analisis/data/ganancias_log_1.txt')
+
 ganancia_1 <- read_delim(path,
                        delim = "\t", escape_double = FALSE,
                        trim_ws = TRUE)
+
 
 ganancia_1 = ganancia_1 %>% filter(semilla != -1)
 
@@ -30,6 +35,8 @@ ganancia_1 %>% arrange(desc(ganancia))
 ### Sin Meses de Pandemia Extendido (abajo del p25, marzo, abril, agosto, septiembre, octubre 2020)
 
 path = '~/buckets/b1/flow-06/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt'
+system('cp ~/buckets/b1/flow-06/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt ~/labo2024v2/src/01analisis/data/ganancias_log_2.txt')
+
 ganancia_2 <- read_delim(path,
                          delim = "\t", escape_double = FALSE,
                          trim_ws = TRUE)
@@ -44,6 +51,10 @@ ganancia_2 %>% arrange(desc(ganancia))
 ### Sin Meses abajo del p75
 
 path = '~/buckets/b1/flow-07/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt'
+system('cp ~/buckets/b1/flow-07/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt ~/labo2024v2/src/01analisis/data/ganancias_log_3.txt')
+
+
+
 ganancia_3 <- read_delim(path,
                          delim = "\t", escape_double = FALSE,
                          trim_ws = TRUE)
@@ -57,12 +68,14 @@ ganancia_3 %>% arrange(desc(ganancia))
 
 ## Sin meses pico
 
-path = '~/buckets/b1/flow-07/wf_septiembre-002/011-KA_evaluate_kaggle/ganancias_log.txt'
+path = '~/buckets/b1/flow-11/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt'
+system('cp ~/buckets/b1/flow-11/wf_septiembre-001/011-KA_evaluate_kaggle/ganancias_log.txt ~/labo2024v2/src/01analisis/data/ganancias_log_4.txt')
+
 ganancia_4 <- read_delim(path,
                          delim = "\t", escape_double = FALSE,
                          trim_ws = TRUE)
 
-ganancia_4 = ganancia_2 %>% filter(semilla != -1)
+ganancia_4 = ganancia_4 %>% filter(semilla != -1)
 
 ganancia_4 %>% group_by(semilla) %>% count()
 
@@ -74,14 +87,15 @@ ganancia_4 %>% arrange(desc(ganancia))
 #EXP1 
 wilcox.test(ganancia$ganancia,ganancia_1$ganancia, paired = TRUE)
 
-#EXP1 BIS
-wilcox.test(ganancia$ganancia,ganancia_4$ganancia, paired = TRUE)
-
 #EXP2 
 wilcox.test(ganancia_1$ganancia,ganancia_2$ganancia, paired = TRUE)
 
 #EXP3
 wilcox.test(ganancia$ganancia,ganancia_3$ganancia, paired = TRUE)
+
+#EXP4
+wilcox.test(ganancia$ganancia,ganancia_4$ganancia, paired = TRUE)
+
 
 # Assuming df is your data frame name
 df_summary <- ganancia %>%
@@ -196,7 +210,6 @@ ganancia_3 %>%
   theme_minimal()
 
 
-
 # Assuming df is your data frame name
 df_summary_4 <- ganancia_4 %>%
   group_by(corte) %>%
@@ -221,6 +234,7 @@ ganancia_4 %>%
   annotate("text", x = 2000, y = promedio_ganancia_4, label = paste("Promedio:", round(promedio_ganancia_4, 2)), 
            color = "red", vjust = -0.5, fontface = "bold") + # Etiqueta para el promedio
   scale_x_continuous(breaks = seq(1400, 2600, by = 200)) +
-  labs(x = "Corte", y = "Ganancia", title = "Ganancia por Corte - MESES PANDEMIA LAG+2") +
+  labs(x = "Corte", y = "Ganancia", title = "Ganancia por Corte - SIN MESES Pico") +
   theme_minimal()
+
 
