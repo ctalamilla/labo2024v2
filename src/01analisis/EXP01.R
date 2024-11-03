@@ -48,11 +48,26 @@ ganancia_3 <- read_delim(path,
                          delim = "\t", escape_double = FALSE,
                          trim_ws = TRUE)
 
-ganancia_3 = ganancia_2 %>% filter(semilla != -1)
+ganancia_3 = ganancia_3 %>% filter(semilla != -1)
 
 ganancia_3 %>% group_by(semilla) %>% count()
 
 ganancia_3 %>% arrange(desc(ganancia))
+
+
+## Sin meses pico
+
+path = '~/buckets/b1/flow-07/wf_septiembre-002/011-KA_evaluate_kaggle/ganancias_log.txt'
+ganancia_4 <- read_delim(path,
+                         delim = "\t", escape_double = FALSE,
+                         trim_ws = TRUE)
+
+ganancia_4 = ganancia_2 %>% filter(semilla != -1)
+
+ganancia_4 %>% group_by(semilla) %>% count()
+
+ganancia_4 %>% arrange(desc(ganancia))
+
 
 ##TESTS 
 
